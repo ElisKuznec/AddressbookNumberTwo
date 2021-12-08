@@ -57,6 +57,7 @@ namespace webAddressBookTests
             EnterEmails(new EmailsData("example@int.com"));
             EnterHomepage("");
             EnterDates();
+            SelectGroup();
             EnterAddress("1/12");
             EnterHome("");
             EnterNotes("");
@@ -116,7 +117,12 @@ namespace webAddressBookTests
             driver.FindElement(By.XPath("//div[@id='content']/form/select[4]/option[10]")).Click();
             driver.FindElement(By.Name("ayear")).Clear();
             driver.FindElement(By.Name("ayear")).SendKeys("1");
-            new SelectElement(driver.FindElement(By.Name("new_group"))).SelectByText("1");
+          
+        }
+
+        private void SelectGroup()
+        {
+            new SelectElement(driver.FindElement(By.Name("new_group"))).SelectByIndex(0);
             driver.FindElement(By.XPath("//div[@id='content']/form/select[5]/option[2]")).Click();
         }
 
