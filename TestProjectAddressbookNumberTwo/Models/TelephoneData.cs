@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactTests
+namespace webAddressBookTests
 {
-    internal class TelephoneData
+    public class TelephoneData
     {
         private string homenumb;
         private string mobilenumb = "";

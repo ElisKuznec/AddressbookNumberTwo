@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactTests
+namespace webAddressBookTests
 {
-    internal class EmailsData
+    public class EmailsData
     {
         private string emailone;
         private string emailtwo = "";

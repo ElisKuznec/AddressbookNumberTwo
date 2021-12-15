@@ -4,50 +4,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactTests
+namespace webAddressBookTests
 {
-    internal class FullNameData
+    public class GroupData
     {
         private string name;
-        private string middlename;
-        private string lastname;
+        private string header;
+        private string footer;
 
-        public FullNameData(string name)
+        public GroupData(string name)
         {
             this.name = name;
         }
 
         public string Name
-        {
-            get
-            {
-                return name;
+        { 
+            get 
+            { 
+                return name; 
             }
             set
             {
                 name = value;
             }
         }
-        public string Middlename
+       
+        public string Header
         {
             get
             {
-                return middlename;
+                return header;
             }
             set
             {
-                middlename = value;
+                header = value;
             }
         }
-        public string Lastname
+        public string Footer
         {
             get
             {
-                return lastname;
+                return footer;
             }
             set
             {
-                lastname = value;
+                footer = value;
             }
         }
     }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContactTests
+namespace webAddressBookTests
 {
-    internal class CompanyData
+    public class CompanyData
     {
         private string companytitle;
         private string companyname;
