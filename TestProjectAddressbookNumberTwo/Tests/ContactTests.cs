@@ -13,26 +13,26 @@ namespace webAddressBookTests
         [Test]
         public void ContactTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            ToTheContactCreatingForm();
+            app.Navi.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Contact.ToTheContactCreatingForm();
             FullNameData word = new FullNameData("Elis");
             word.Middlename = "Kuznec";
             word.Lastname = "Nick";
-            EnterFullName(word);
-            EnterNickname("Lis");
-            EnterCompanyInformation(new CompanyData("company","comp","add"));
-            EnterTelephoneNumbers(new TelephoneData("88-94-55"));
-            EnterEmails(new EmailsData("example@int.com"));
-            EnterHomepage("");
-            EnterDates();
-            SelectGroup();
-            EnterAddress("1/12");
-            EnterHome("");
-            EnterNotes("");
-            SaveContact();
-            ToTheHomePage();
-            Logout();
+            app.Contact.EnterFullName(word);
+            app.Contact.EnterNickname("Lis");
+            app.Contact.EnterCompanyInformation(new CompanyData("company","comp","add"));
+            app.Contact.EnterTelephoneNumbers(new TelephoneData("88-94-55"));
+            app.Contact.EnterEmails(new EmailsData("example@int.com"));
+            app.Contact.EnterHomepage("");
+            app.Contact.EnterDates();
+            app.Contact.SelectGroup();
+            app.Contact.EnterAddress("1/12");
+            app.Contact.EnterHome("");
+            app.Contact.EnterNotes("");
+            app.Contact.SaveContact();
+            app.Navi.ToTheHomePage();
+            app.Exit.Logout();
         }
     }
 }
