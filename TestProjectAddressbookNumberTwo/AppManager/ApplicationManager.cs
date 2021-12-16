@@ -29,14 +29,21 @@ namespace webAddressBookTests
             baseURL = "http://localhost/addressbook/";
             verificationErrors = new StringBuilder();
 
-            loginHelper = new LoginHelper(driver);
-            navigation = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            logoutHelper = new LogoutHelper(driver);
-            contactHelper = new ContactHelper(driver);
+            loginHelper = new LoginHelper(this);
+            navigation = new NavigationHelper(baseURL,this);
+            groupHelper = new GroupHelper(this);
+            logoutHelper = new LogoutHelper(this);
+            contactHelper = new ContactHelper(this);
 
         }
 
+        public IWebDriver Driver 
+        { 
+            get 
+            { 
+                return driver; 
+            } 
+        }
         public void Stop() 
         {
             try

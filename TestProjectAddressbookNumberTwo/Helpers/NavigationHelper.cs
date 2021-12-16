@@ -13,7 +13,7 @@ namespace webAddressBookTests
     {
         private string baseURL;
 
-        public NavigationHelper(IWebDriver driver, string baseURL) : base(driver)
+        public NavigationHelper(string baseURL, ApplicationManager manager) : base(manager)
         {
             this.baseURL = baseURL;
         }

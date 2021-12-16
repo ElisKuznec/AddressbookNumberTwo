@@ -11,35 +11,39 @@ namespace webAddressBookTests
 {
     public class ContactHelper : HelperBase
     {
-        public ContactHelper(IWebDriver driver) : base(driver)
+        public ContactHelper(ApplicationManager manager) : base(manager)
         { }
 
-        public void ToTheContactCreatingForm()
+        public ContactHelper ToTheContactCreatingForm()
         {
             driver.FindElement(By.LinkText("add new")).Click();
+            return this;
         }
 
-        public void EnterNotes(string note)
+        public ContactHelper EnterNotes(string note)
         {
             driver.FindElement(By.Name("notes")).Click();
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys(note);
+            return this;
         }
 
-        public void EnterHome(string addphone)
+        public ContactHelper EnterHome(string addphone)
         {
             driver.FindElement(By.Name("phone2")).Click();
             driver.FindElement(By.Name("phone2")).Clear();
             driver.FindElement(By.Name("phone2")).SendKeys(addphone);
+            return this;
         }
 
-        public void EnterAddress(string address)
+        public ContactHelper EnterAddress(string address)
         {
             driver.FindElement(By.Name("address2")).Clear();
             driver.FindElement(By.Name("address2")).SendKeys(address);
+            return this;
         }
 
-        public void EnterDates()
+        public ContactHelper EnterDates()
         {
             new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText("1");
             driver.FindElement(By.Name("bmonth")).Click();
@@ -55,22 +59,24 @@ namespace webAddressBookTests
             driver.FindElement(By.XPath("//div[@id='content']/form/select[4]/option[10]")).Click();
             driver.FindElement(By.Name("ayear")).Clear();
             driver.FindElement(By.Name("ayear")).SendKeys("1");
-
+            return this;
         }
 
-        public void SelectGroup()
+        public ContactHelper SelectGroup()
         {
             new SelectElement(driver.FindElement(By.Name("new_group"))).SelectByIndex(0);
             driver.FindElement(By.XPath("//div[@id='content']/form/select[5]/option[2]")).Click();
+            return this;
         }
 
-        public void EnterHomepage(string homepage)
+        public ContactHelper EnterHomepage(string homepage)
         {
             driver.FindElement(By.Name("homepage")).Clear();
             driver.FindElement(By.Name("homepage")).SendKeys(homepage);
+            return this;
         }
 
-        public void EnterEmails(EmailsData e)
+        public ContactHelper EnterEmails(EmailsData e)
         {
             driver.FindElement(By.Name("email")).Clear();
             driver.FindElement(By.Name("email")).SendKeys(e.Emailone);
@@ -78,9 +84,10 @@ namespace webAddressBookTests
             driver.FindElement(By.Name("email2")).SendKeys(e.Emailtwo);
             driver.FindElement(By.Name("email3")).Clear();
             driver.FindElement(By.Name("email3")).SendKeys(e.Emailthree);
+            return this;
         }
 
-        public void EnterTelephoneNumbers(TelephoneData numb)
+        public ContactHelper EnterTelephoneNumbers(TelephoneData numb)
         {
             driver.FindElement(By.Name("home")).Click();
             driver.FindElement(By.Name("home")).Clear();
@@ -91,9 +98,10 @@ namespace webAddressBookTests
             driver.FindElement(By.Name("work")).SendKeys(numb.Worknumb);
             driver.FindElement(By.Name("fax")).Clear();
             driver.FindElement(By.Name("fax")).SendKeys(numb.Faxnumb);
+            return this;
         }
 
-        public void EnterCompanyInformation(CompanyData info)
+        public ContactHelper EnterCompanyInformation(CompanyData info)
         {
             driver.FindElement(By.Name("title")).Click();
             driver.FindElement(By.Name("title")).Clear();
@@ -104,15 +112,17 @@ namespace webAddressBookTests
             driver.FindElement(By.Name("address")).Click();
             driver.FindElement(By.Name("address")).Clear();
             driver.FindElement(By.Name("address")).SendKeys(info.Companyaddress);
+            return this;
         }
 
-        public void EnterNickname(string nick)
+        public ContactHelper EnterNickname(string nick)
         {
             driver.FindElement(By.Name("nickname")).Clear();
             driver.FindElement(By.Name("nickname")).SendKeys(nick);
+            return this;
         }
 
-        public void EnterFullName(FullNameData word)
+        public ContactHelper EnterFullName(FullNameData word)
         {
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
@@ -122,11 +132,13 @@ namespace webAddressBookTests
             driver.FindElement(By.Name("middlename")).SendKeys(word.Middlename);
             driver.FindElement(By.Name("lastname")).Clear();
             driver.FindElement(By.Name("lastname")).SendKeys(word.Lastname);
+            return this;
         }
 
-        public void SaveContact()
+        public ContactHelper SaveContact()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+            return this;
         }
     }
 }

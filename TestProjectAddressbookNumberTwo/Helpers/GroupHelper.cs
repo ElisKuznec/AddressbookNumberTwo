@@ -12,26 +12,37 @@ namespace webAddressBookTests
     public class GroupHelper : HelperBase
     {
 
-        public GroupHelper(IWebDriver driver):base(driver)
-        {}
+        public GroupHelper(ApplicationManager manager) : base(manager)
+        { }
 
-        public void DeleteGroup()
+        public GroupHelper Create(GroupData group) 
+        {
+            CreateNewGroup();
+            NamingFields(group);
+            SaveGroup();
+            return this;
+        }
+
+        public GroupHelper DeleteGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
+            return this;
         }
 
-        public void SelectGroup(int index)
+        public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
         }
 
-        public void CreateNewGroup()
+        public GroupHelper CreateNewGroup()
         {
             driver.FindElement(By.LinkText("groups")).Click();
             driver.FindElement(By.Name("new")).Click();
+            return this;
         }
 
-        public void NamingFields(GroupData group)
+        public GroupHelper NamingFields(GroupData group)
         {
             driver.FindElement(By.Name("group_name")).Click();
             driver.FindElement(By.Name("group_name")).Clear();
@@ -40,11 +51,13 @@ namespace webAddressBookTests
             driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
             driver.FindElement(By.Name("group_footer")).Clear();
             driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
+            return this;
         }
 
-        public void SaveGroup()
+        public GroupHelper SaveGroup()
         {
             driver.FindElement(By.Name("submit")).Click();
+            return this;
         }
     }
 }
