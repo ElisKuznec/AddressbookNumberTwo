@@ -15,6 +15,18 @@ namespace webAddressBookTests
         public GroupHelper(ApplicationManager manager) : base(manager)
         { }
 
+        public GroupHelper ToEdithGroupForm()
+        {
+            driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+
+        public GroupHelper UpdateGroup()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
         public GroupHelper Create(GroupData group) 
         {
             CreateNewGroup();

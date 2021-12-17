@@ -14,6 +14,7 @@ namespace webAddressBookTests
     {
         protected IWebDriver driver;
         private StringBuilder verificationErrors;
+        protected bool acceptNextAlert;
         protected string baseURL;
 
         protected LoginHelper loginHelper;
@@ -30,21 +31,21 @@ namespace webAddressBookTests
             verificationErrors = new StringBuilder();
 
             loginHelper = new LoginHelper(this);
-            navigation = new NavigationHelper(baseURL,this);
+            navigation = new NavigationHelper(baseURL, this);
             groupHelper = new GroupHelper(this);
             logoutHelper = new LogoutHelper(this);
             contactHelper = new ContactHelper(this);
 
         }
 
-        public IWebDriver Driver 
-        { 
-            get 
-            { 
-                return driver; 
-            } 
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
         }
-        public void Stop() 
+        public void Stop()
         {
             try
             {
@@ -58,41 +59,41 @@ namespace webAddressBookTests
 
         public LoginHelper Auth
         {
-            get 
-            { 
+            get
+            {
                 return loginHelper;
             }
         }
 
-        public NavigationHelper Navi 
-        { 
-            get 
+        public NavigationHelper Navi
+        {
+            get
             {
                 return navigation;
-            } 
+            }
         }
 
-        public GroupHelper Group 
-        { 
-            get 
-            { 
-                return groupHelper; 
-            } 
+        public GroupHelper Group
+        {
+            get
+            {
+                return groupHelper;
+            }
         }
 
-        public LogoutHelper Exit 
-        { 
-            get 
-            { 
-                return logoutHelper; 
-            } 
+        public LogoutHelper Exit
+        {
+            get
+            {
+                return logoutHelper;
+            }
         }
-        public ContactHelper Contact 
-        { 
-            get 
-            { 
-                return contactHelper; 
-            } 
+        public ContactHelper Contact
+        {
+            get
+            {
+                return contactHelper;
+            }
         }
     }
-}
+ }

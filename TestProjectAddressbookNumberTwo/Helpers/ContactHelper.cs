@@ -14,6 +14,36 @@ namespace webAddressBookTests
         public ContactHelper(ApplicationManager manager) : base(manager)
         { }
 
+        public ContactHelper SaveUpdate()
+        {
+            driver.FindElement(By.XPath("//div[@id='content']/form/input[22]")).Click();
+            return this;
+        }
+
+        public ContactHelper UpdateContact()
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).Click();
+            return this;
+        }
+
+        public ContactHelper AcceptDeletingContact()
+        {
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+        
+        public ContactHelper DeleteSelectedContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;    
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+
         public ContactHelper ToTheContactCreatingForm()
         {
             driver.FindElement(By.LinkText("add new")).Click();

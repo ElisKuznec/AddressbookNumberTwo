@@ -13,9 +13,17 @@ namespace webAddressBookTests
         public void GroupModTest()
         {
             app.Navi.GoToGroupPage();
-            app.Group.SelectGroup(1);
-            driver.FindElement(By.Name("edit")).Click();
-
+            app.Group
+                .SelectGroup(1)
+                .ToEdithGroupForm();
+            GroupData group = new GroupData("test");
+            group.Header = "test";
+            group.Footer = "test";
+            app.Group
+                  .NamingFields(group)
+                  .UpdateGroup();
+            app.Navi.GoToGroupPage();
+            app.Exit.Logout();
         }
     }
 }
