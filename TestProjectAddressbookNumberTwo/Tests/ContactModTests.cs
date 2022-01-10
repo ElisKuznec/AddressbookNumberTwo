@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace webAddressBookTests
 {
     [TestFixture]
-    public class ContactModTests : TestBase
+    public class ContactModTests : AuthTestBase
     {
         [Test]
 
@@ -30,8 +30,7 @@ namespace webAddressBookTests
                 .EnterHome("")
                 .EnterNotes("")
                 .SaveUpdate();
-            app.Navi.GoToHomePage();
-            app.Exit.Logout();  
+            app.Navi.GoToHomePage(); 
         }
     
     }

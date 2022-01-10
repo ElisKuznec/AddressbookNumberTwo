@@ -52,24 +52,19 @@ namespace webAddressBookTests
 
         public ContactHelper EnterNotes(string note)
         {
-            driver.FindElement(By.Name("notes")).Click();
-            driver.FindElement(By.Name("notes")).Clear();
-            driver.FindElement(By.Name("notes")).SendKeys(note);
+            Type(By.Name("notes"), note);
             return this;
         }
 
         public ContactHelper EnterHome(string addphone)
         {
-            driver.FindElement(By.Name("phone2")).Click();
-            driver.FindElement(By.Name("phone2")).Clear();
-            driver.FindElement(By.Name("phone2")).SendKeys(addphone);
+            Type(By.Name("phone2"), addphone);
             return this;
         }
 
         public ContactHelper EnterAddress(string address)
         {
-            driver.FindElement(By.Name("address2")).Clear();
-            driver.FindElement(By.Name("address2")).SendKeys(address);
+            Type(By.Name("address2"), address);
             return this;
         }
 
@@ -101,67 +96,46 @@ namespace webAddressBookTests
 
         public ContactHelper EnterHomepage(string homepage)
         {
-            driver.FindElement(By.Name("homepage")).Clear();
-            driver.FindElement(By.Name("homepage")).SendKeys(homepage);
+            Type(By.Name("homepage"), homepage);
             return this;
         }
 
         public ContactHelper EnterEmails(EmailsData e)
         {
-            driver.FindElement(By.Name("email")).Clear();
-            driver.FindElement(By.Name("email")).SendKeys(e.Emailone);
-            driver.FindElement(By.Name("email2")).Clear();
-            driver.FindElement(By.Name("email2")).SendKeys(e.Emailtwo);
-            driver.FindElement(By.Name("email3")).Clear();
-            driver.FindElement(By.Name("email3")).SendKeys(e.Emailthree);
+            Type(By.Name("email"), e.Emailone);
+            Type(By.Name("email2"), e.Emailtwo);
+            Type(By.Name("email3"), e.Emailthree);
             return this;
         }
 
         public ContactHelper EnterTelephoneNumbers(TelephoneData numb)
         {
-            driver.FindElement(By.Name("home")).Click();
-            driver.FindElement(By.Name("home")).Clear();
-            driver.FindElement(By.Name("home")).SendKeys(numb.Homenumb);
-            driver.FindElement(By.Name("mobile")).Clear();
-            driver.FindElement(By.Name("mobile")).SendKeys(numb.Mobilenumb);
-            driver.FindElement(By.Name("work")).Clear();
-            driver.FindElement(By.Name("work")).SendKeys(numb.Worknumb);
-            driver.FindElement(By.Name("fax")).Clear();
-            driver.FindElement(By.Name("fax")).SendKeys(numb.Faxnumb);
+            Type(By.Name("home"), numb.Homenumb);
+            Type(By.Name("mobile"), numb.Mobilenumb);
+            Type(By.Name("work"), numb.Worknumb);
+            Type(By.Name("fax"), numb.Faxnumb);
             return this;
         }
 
         public ContactHelper EnterCompanyInformation(CompanyData info)
         {
-            driver.FindElement(By.Name("title")).Click();
-            driver.FindElement(By.Name("title")).Clear();
-            driver.FindElement(By.Name("title")).SendKeys(info.Companytitle);
-            driver.FindElement(By.Name("company")).Click();
-            driver.FindElement(By.Name("company")).Clear();
-            driver.FindElement(By.Name("company")).SendKeys(info.Companyname);
-            driver.FindElement(By.Name("address")).Click();
-            driver.FindElement(By.Name("address")).Clear();
-            driver.FindElement(By.Name("address")).SendKeys(info.Companyaddress);
+            Type(By.Name("title"), info.Companytitle);
+            Type(By.Name("company"), info.Companyname);
+            Type(By.Name("address"), info.Companyaddress);
             return this;
         }
 
         public ContactHelper EnterNickname(string nick)
         {
-            driver.FindElement(By.Name("nickname")).Clear();
-            driver.FindElement(By.Name("nickname")).SendKeys(nick);
+            Type(By.Name("name"), nick);
             return this;
         }
 
         public ContactHelper EnterFullName(FullNameData word)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(word.Name);
-            driver.FindElement(By.Name("middlename")).Click();
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(word.Middlename);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(word.Lastname);
+            Type(By.Name("firstname"), word.Name);
+            Type(By.Name("middlename"), word.Middlename);
+            Type(By.Name("lastname"), word.Lastname);
             return this;
         }
 

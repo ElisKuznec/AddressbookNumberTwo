@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace webAddressBookTests
 {
     [TestFixture]
-    public class ContactRemovalTests : TestBase
+    public class ContactRemovalTests : AuthTestBase
     {
         [Test]
         public void ContactRemovalTest()
@@ -19,7 +19,6 @@ namespace webAddressBookTests
                 .DeleteSelectedContact()
                 .AcceptDeletingContact();
             app.Navi.GoToGroupPage();
-            app.Exit.Logout();
         }
 
     }

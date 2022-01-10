@@ -10,12 +10,11 @@ namespace webAddressBookTests
     [SetUpFixture]
     public class TestSuitFixture
     {
+
         [SetUp]
         public void InitApplicationManager()
         {
             ApplicationManager app = ApplicationManager.GetInstance();
-            app.Navi.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
         }
     }
 }

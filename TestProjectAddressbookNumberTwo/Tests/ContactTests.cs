@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace webAddressBookTests
 {
     [TestFixture]
-    public class ContactTests : TestBase
+    public class ContactTests : AuthTestBase
     { 
 
         [Test]
@@ -32,7 +32,6 @@ namespace webAddressBookTests
                 .EnterNotes("")
                 .SaveContact();
             app.Navi.ToTheHomePage();
-            app.Exit.Logout();
         }
     }
 }

@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace webAddressBookTests
 {
     [TestFixture]
-    public class GroupModTests : TestBase
+    public class GroupModTests : AuthTestBase
     {
         [Test]
         public void GroupModTest()
@@ -17,13 +17,12 @@ namespace webAddressBookTests
                 .SelectGroup(1)
                 .ToEdithGroupForm();
             GroupData group = new GroupData("test");
-            group.Header = "test";
-            group.Footer = "test";
+            group.Header = null;
+            group.Footer = null;
             app.Group
                   .NamingFields(group)
                   .UpdateGroup();
             app.Navi.GoToGroupPage();
-            app.Exit.Logout();
         }
     }
 }
