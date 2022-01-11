@@ -127,7 +127,7 @@ namespace webAddressBookTests
 
         public ContactHelper EnterNickname(string nick)
         {
-            Type(By.Name("name"), nick);
+            Type(By.Name("nickname"), nick);
             return this;
         }
 

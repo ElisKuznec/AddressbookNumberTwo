@@ -25,10 +25,10 @@ namespace webAddressBookTests
                 .EnterCompanyInformation(new CompanyData("co", "co", "a"))
                 .EnterTelephoneNumbers(new TelephoneData("8"))
                 .EnterEmails(new EmailsData("e"))
-                .EnterHomepage("")
+                .EnterHomepage("3")
                 .EnterAddress("11/12")
-                .EnterHome("")
-                .EnterNotes("")
+                .EnterHome("3")
+                .EnterNotes("3")
                 .SaveUpdate();
             app.Navi.GoToHomePage(); 
         }

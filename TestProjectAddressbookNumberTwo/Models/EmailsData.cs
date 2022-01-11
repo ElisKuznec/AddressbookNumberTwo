@@ -9,8 +9,8 @@ namespace webAddressBookTests
     public class EmailsData
     {
         private string emailone;
-        private string emailtwo = "";
-        private string emailthree = "";
+        private string emailtwo = "6";
+        private string emailthree = "6";
 
         public EmailsData(string emailone)
         {

@@ -9,9 +9,9 @@ namespace webAddressBookTests
     public class TelephoneData
     {
         private string homenumb;
-        private string mobilenumb = "";
-        private string worknumb = "";
-        private string faxnumb = "";
+        private string mobilenumb = "2";
+        private string worknumb = "2";
+        private string faxnumb = "2";
 
         public TelephoneData(string homenumb)
         {

@@ -17,19 +17,19 @@ namespace webAddressBookTests
                 ToTheContactCreatingForm();
             FullNameData word = new FullNameData("Elis");
             word.Middlename = "Kuznec";
-            word.Lastname = "Nick";
+            word.Lastname = "Nicññk";
             app.Contact
                 .EnterFullName(word)
                 .EnterNickname("Lis")
                 .EnterCompanyInformation(new CompanyData("company","comp","add"))
                 .EnterTelephoneNumbers(new TelephoneData("88-94-55"))
                 .EnterEmails(new EmailsData("example@int.com"))
-                .EnterHomepage("")
+                .EnterHomepage("1")
                 .EnterDates()
                 .SelectGroup()
                 .EnterAddress("1/12")
-                .EnterHome("")
-                .EnterNotes("")
+                .EnterHome("2")
+                .EnterNotes("3")
                 .SaveContact();
             app.Navi.ToTheHomePage();
         }
