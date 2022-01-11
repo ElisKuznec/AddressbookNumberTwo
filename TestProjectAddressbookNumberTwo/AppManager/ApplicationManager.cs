@@ -30,7 +30,7 @@ namespace webAddressBookTests
         {
             driver = new FirefoxDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
-            baseURL = "http://localhost/addressbook/";
+            baseURL = "http://localhost";
             verificationErrors = new StringBuilder();
 
             loginHelper = new LoginHelper(this);
