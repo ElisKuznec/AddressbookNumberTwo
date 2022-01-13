@@ -14,6 +14,29 @@ namespace webAddressBookTests
         public ContactHelper(ApplicationManager manager) : base(manager)
         { }
 
+        internal List<FullNameData> GetContactList()
+        {
+            List<FullNameData> contacts = new List<FullNameData>();
+            manager.Navi.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+            foreach (IWebElement element in elements)
+            {
+                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                contacts.Add(new FullNameData(element.Text, null));
+                Console.WriteLine(element.Text);
+                IList<IWebElement> name = element.FindElements(By.CssSelector("td:nth-child(2)"));
+                IList<IWebElement> middlename = element.FindElements(By.CssSelector("td:nth-child(3)"));
+                for (int i = 0; i < middlename.Count; i++)
+                {
+                    for (int i1 = 0; i1 < name.Count; i1++)
+                    {
+                        contacts.Add(new FullNameData(name[i].Text, middlename[i].Text));
+                    }
+                }
+            }
+            return contacts;
+        }
+
         public ContactHelper SaveUpdate()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[22]")).Click();

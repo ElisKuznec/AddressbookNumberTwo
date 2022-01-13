@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace webAddressBookTests
 {
@@ -14,6 +15,8 @@ namespace webAddressBookTests
 
         public void ContactModTest() 
         {
+            List<FullNameData> oldContact = app.Contact.GetContactList();
+
             app.Navi.HomePage();
             FullNameData word = new FullNameData("Sile");
             word.Middlename = "Kuz";
@@ -30,7 +33,17 @@ namespace webAddressBookTests
                 .EnterHome("3")
                 .EnterNotes("3")
                 .SaveUpdate();
-            app.Navi.GoToHomePage(); 
+            app.Navi.GoToHomePage();
+
+            List<FullNameData> newContact = app.Contact.GetContactList();
+
+            oldContact[0].Name = word.Name;
+            oldContact[0].Middlename = word.Middlename;
+
+            oldContact.Sort();
+            newContact.Sort();
+
+            Assert.AreEqual(oldContact, oldContact);
         }
     
     }
