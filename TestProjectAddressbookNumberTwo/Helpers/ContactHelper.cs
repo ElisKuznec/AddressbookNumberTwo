@@ -14,27 +14,22 @@ namespace webAddressBookTests
         public ContactHelper(ApplicationManager manager) : base(manager)
         { }
 
-        internal List<FullNameData> GetContactList()
+        public List<ContactData> GetContactList()
         {
-            List<FullNameData> contacts = new List<FullNameData>();
+            List<ContactData> contactsList = new List<ContactData>();
             manager.Navi.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name='entry']"));
-            foreach (IWebElement element in elements)
+
+            ICollection<IWebElement> webContactElements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+
+            foreach (IWebElement element in webContactElements)
             {
                 IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                contacts.Add(new FullNameData(element.Text, null));
-                Console.WriteLine(element.Text);
-                IList<IWebElement> name = element.FindElements(By.CssSelector("td:nth-child(2)"));
-                IList<IWebElement> middlename = element.FindElements(By.CssSelector("td:nth-child(3)"));
-                for (int i = 0; i < middlename.Count; i++)
-                {
-                    for (int i1 = 0; i1 < name.Count; i1++)
-                    {
-                        contacts.Add(new FullNameData(name[i].Text, middlename[i].Text));
-                    }
-                }
+                IWebElement lastName = cells[1];
+                IWebElement firstName = cells[2];
+                contactsList.Add(new ContactData(firstName.Text, lastName.Text));
             }
-            return contacts;
+
+            return contactsList;
         }
 
         public ContactHelper SaveUpdate()
@@ -52,18 +47,19 @@ namespace webAddressBookTests
         public ContactHelper AcceptDeletingContact()
         {
             driver.SwitchTo().Alert().Accept();
+            driver.FindElement(By.CssSelector("div.msgbox"));
             return this;
         }
-        
+
         public ContactHelper DeleteSelectedContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            return this;    
+            return this;
         }
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
@@ -123,7 +119,7 @@ namespace webAddressBookTests
             return this;
         }
 
-        public ContactHelper EnterEmails(EmailsData e)
+        public ContactHelper EnterEmails(ContactData e)
         {
             Type(By.Name("email"), e.Emailone);
             Type(By.Name("email2"), e.Emailtwo);
@@ -131,7 +127,7 @@ namespace webAddressBookTests
             return this;
         }
 
-        public ContactHelper EnterTelephoneNumbers(TelephoneData numb)
+        public ContactHelper EnterTelephoneNumbers(ContactData numb)
         {
             Type(By.Name("home"), numb.Homenumb);
             Type(By.Name("mobile"), numb.Mobilenumb);
@@ -140,7 +136,26 @@ namespace webAddressBookTests
             return this;
         }
 
-        public ContactHelper EnterCompanyInformation(CompanyData info)
+        public ContactHelper FullContactCreation(ContactData fullData)
+        {
+            ToTheContactCreatingForm();
+            EnterFullName(fullData);
+            EnterNickname("Lis");
+            EnterCompanyInformation(fullData);
+            EnterTelephoneNumbers(fullData);
+            EnterEmails(fullData);
+            EnterHomepage("1");
+            EnterDates();
+            SelectGroup();
+            EnterAddress("1/12");
+            EnterHome("2");
+            EnterNotes("3");
+            SaveContact();
+            manager.Navi.ToTheHomePage();
+            return this;
+        }
+
+        public ContactHelper EnterCompanyInformation(ContactData info)
         {
             Type(By.Name("title"), info.Companytitle);
             Type(By.Name("company"), info.Companyname);
@@ -154,7 +169,7 @@ namespace webAddressBookTests
             return this;
         }
 
-        public ContactHelper EnterFullName(FullNameData word)
+        public ContactHelper EnterFullName(ContactData word)
         {
             Type(By.Name("firstname"), word.Name);
             Type(By.Name("middlename"), word.Middlename);
@@ -165,6 +180,40 @@ namespace webAddressBookTests
         public ContactHelper SaveContact()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+            return this;
+        }
+
+        public ContactHelper CreateSimpleContact(ContactData simpleData)
+        {
+            ToTheContactCreatingForm();
+            EnterFullName(new ContactData(simpleData.Name, simpleData.Lastname));
+            SaveContact();
+            return this;
+        }
+
+        public void AddIfNoContacts(int index)
+        {
+            while (!IsElementPresent(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td")))
+            {
+                CreateSimpleContact(new ContactData("Simple", "One"));
+                manager.Navi.GoToHomePage();
+            }
+        }
+
+        public ContactHelper ModifyContact(ContactData newData)
+        {
+            UpdateContact();
+            EnterFullName(newData);
+            EnterNickname("Lis");
+            EnterCompanyInformation(newData);
+            EnterTelephoneNumbers(newData);
+            EnterEmails(newData);
+            EnterHomepage("3");
+            EnterAddress("11/12");
+            EnterHome("3");
+            EnterNotes("3");
+            SaveUpdate();
+            manager.Navi.GoToHomePage();
             return this;
         }
     }

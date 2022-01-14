@@ -14,16 +14,21 @@ namespace webAddressBookTests
         [Test]
         public void ContactRemovalTest()
         {
-            List<FullNameData> oldContact = app.Contact.GetContactList();
 
             app.Navi.HomePage();
+
+            int indexToRemove = 1;
+            app.Contact.AddIfNoContacts(indexToRemove);
+
+            List<ContactData> oldContact = app.Contact.GetContactList();
+            
             app.Contact
-                .SelectContact(1)
+                .SelectContact(0)
                 .DeleteSelectedContact()
                 .AcceptDeletingContact();
             app.Navi.GoToGroupPage();
 
-            List<FullNameData> newContact = app.Contact.GetContactList();
+            List<ContactData> newContact = app.Contact.GetContactList();
 
             oldContact.RemoveAt(0);
 

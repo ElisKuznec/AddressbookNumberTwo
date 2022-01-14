@@ -15,6 +15,14 @@ namespace webAddressBookTests
         public GroupHelper(ApplicationManager manager) : base(manager)
         { }
 
+        public void AddIfNoGroups(int index)
+        {
+            while (!IsElementPresent(By.XPath($"//div[@id='content']/form/span[{index + 1}]/input")))
+            {
+                CreateGroup(new GroupData("Sadness"));
+            }
+        }
+
         public GroupHelper ToEdithGroupForm()
         {
             driver.FindElement(By.Name("edit")).Click();
@@ -39,7 +47,7 @@ namespace webAddressBookTests
             return groups;
         }
 
-        public GroupHelper Create(GroupData group) 
+        public GroupHelper CreateGroup(GroupData group) 
         {
             CreateNewGroup();
             NamingFields(group);
