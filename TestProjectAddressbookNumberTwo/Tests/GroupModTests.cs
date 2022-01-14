@@ -16,6 +16,10 @@ namespace webAddressBookTests
             List<GroupData> oldGroups = app.Group.GetGroupList();
 
             app.Navi.GoToGroupPage();
+
+            int indexToMod = 1;
+            app.Group.AddIfNoGroups(indexToMod);
+
             app.Group
                 .SelectGroup(0)
                 .ToEdithGroupForm();

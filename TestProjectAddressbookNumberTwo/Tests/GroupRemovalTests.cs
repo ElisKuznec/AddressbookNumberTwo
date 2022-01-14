@@ -16,6 +16,9 @@ namespace webAddressBookTests
 
             app.Navi.GoToGroupPage();
 
+            int indexToRemove = 1;
+            app.Group.AddIfNoGroups(indexToRemove);
+
             List<GroupData> oldGroups = app.Group.GetGroupList();
 
             app.Group
