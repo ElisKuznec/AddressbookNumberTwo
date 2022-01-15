@@ -12,13 +12,12 @@ namespace webAddressBookTests
     {
         [Test]
         public void GroupModTest()
-        {
-            List<GroupData> oldGroups = app.Group.GetGroupList();
-
+        { 
             app.Navi.GoToGroupPage();
-
             int indexToMod = 1;
             app.Group.AddIfNoGroups(indexToMod);
+
+            List<GroupData> oldGroups = app.Group.GetGroupList();
 
             app.Group
                 .SelectGroup(0)

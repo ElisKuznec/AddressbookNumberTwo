@@ -45,13 +45,13 @@ namespace webAddressBookTests
                 return true;
             }
 
-            return Name == other.Name & Lastname == other.Lastname;
+            return Lastname == other.Lastname & Name == other.Name;
 
         }
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode() & Lastname.GetHashCode();
+            return Lastname.GetHashCode() & Name.GetHashCode();
         }
 
         public int CompareTo(ContactData other)
@@ -60,7 +60,15 @@ namespace webAddressBookTests
             {
                 return 1;
             }
-            return Name.CompareTo(other.Name) & Lastname.CompareTo(other.Lastname);
+            if (this.lastname != other.lastname)
+            {
+                return lastname.CompareTo(other.lastname);
+            }
+            if (this.name != other.name)
+            {
+                return name.CompareTo(other.name);
+            }
+            return Lastname.CompareTo(other.Lastname) & Name.CompareTo(other.Name);
         }
         public override string ToString()
         {
