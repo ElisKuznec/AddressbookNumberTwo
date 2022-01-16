@@ -18,17 +18,15 @@ namespace webAddressBookTests
             app.Group.AddIfNoGroups(indexToMod);
 
             List<GroupData> oldGroups = app.Group.GetGroupList();
-
-            app.Group
-                .SelectGroup(0)
-                .ToEdithGroupForm();
+            GroupData oldData = oldGroups[0];
+            
             GroupData group = new GroupData("test");
             group.Header = null;
             group.Footer = null;
-            app.Group
-                  .NamingFields(group)
-                  .UpdateGroup();
-            app.Navi.GoToGroupPage();
+
+            app.Group.ModifyGroup(group);
+
+            Assert.AreEqual(oldGroups.Count, app.Group.GetGroupCount());
 
             List<GroupData> newGroups = app.Group.GetGroupList();
 
@@ -38,6 +36,13 @@ namespace webAddressBookTests
 
             Assert.AreEqual(oldGroups, newGroups);
 
+            foreach (GroupData groupForMatching in newGroups)
+            {
+                if(group.Id == oldData.Id)
+                {
+                    Assert.AreEqual(group.Name, groupForMatching.Name);
+                }
+            }
 
         }
     }
