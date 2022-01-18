@@ -18,20 +18,24 @@ namespace webAddressBookTests
 
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contactCache = new List<ContactData>();
-            manager.Navi.GoToHomePage();
-
-            ICollection<IWebElement> webContactElements = driver.FindElements(By.CssSelector("tr[name='entry']"));
-
-            foreach (IWebElement element in webContactElements)
+            if (contactCache == null)
             {
-                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                IWebElement lastName = cells[1];
-                IWebElement firstName = cells[2];
-                contactCache.Add(new ContactData(firstName.Text, lastName.Text)
+
+                List<ContactData> contactCache = new List<ContactData>();
+                manager.Navi.GoToHomePage();
+
+                ICollection<IWebElement> webContactElements = driver.FindElements(By.CssSelector("tr[name='entry']"));
+
+                foreach (IWebElement element in webContactElements)
                 {
-                    Id = element.FindElement(By.TagName("input")).GetAttribute("value")
-                });
+                    IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                    IWebElement lastName = cells[1];
+                    IWebElement firstName = cells[2];
+                    contactCache.Add(new ContactData(firstName.Text, lastName.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
             }
 
             return new List<ContactData>(contactCache);
