@@ -17,6 +17,11 @@ namespace webAddressBookTests
         {
 
             ContactData newData = new ContactData("Annie", "Spark");
+            newData.Mobilenumb = "555-090-097";
+            newData.Emailone = "NOTexample@int.com";
+            newData.Address = "Nottingham 77/11";
+
+
             int indexToModify = 1;
             app.Contact.AddIfNoContacts(indexToModify);
 

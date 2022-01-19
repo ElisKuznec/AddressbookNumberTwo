@@ -16,6 +16,9 @@ namespace webAddressBookTests
         {
 
             ContactData newOne = new ContactData("Elis", "Nicññk");
+            newOne.Mobilenumb = "555-090";
+            newOne.Emailone = "example@int.com";
+            newOne.Address = "Sherwood 567/1";
 
             List<ContactData> oldContacts = app.Contact.GetContactList();
 

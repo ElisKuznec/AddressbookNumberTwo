@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
 
 namespace webAddressBookTests
 {
@@ -13,6 +14,47 @@ namespace webAddressBookTests
     {
         public ContactHelper(ApplicationManager manager) : base(manager)
         { }
+
+        public ContactData GetContactInformationFromTable(int index)
+        {
+            manager.Navi.GoToHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastname = cells[1].Text;
+            string name = cells[2].Text;
+            string address = cells[3].Text;
+            string allPhones = cells[5].Text;
+            return new ContactData(name, lastname)
+            {
+                Address = address,
+                AllPhones = allPhones
+
+            };
+        }
+
+        public ContactData GetContactInformationFromEditForm(int index)
+        {
+            manager.Navi.GoToHomePage();
+            UpdateContact();
+            string name = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string homenumb = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilenumb = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string worknumb = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            return new ContactData(name, lastname)
+            {
+                
+                Homenumb = homenumb,
+                Mobilenumb = mobilenumb,
+                Worknumb = worknumb,
+                Address = address
+
+            };
+
+
+        }
 
         private List<ContactData> contactCache = null;
 
@@ -29,9 +71,9 @@ namespace webAddressBookTests
                 foreach (IWebElement element in webContactElements)
                 {
                     IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                    IWebElement lastName = cells[1];
-                    IWebElement firstName = cells[2];
-                    contactCache.Add(new ContactData(firstName.Text, lastName.Text)
+                    IWebElement name = cells[1];
+                    IWebElement lastname = cells[2];
+                    contactCache.Add(new ContactData(name.Text, lastname.Text)
                     {
                         Id = element.FindElement(By.TagName("input")).GetAttribute("value")
                     });
@@ -92,9 +134,9 @@ namespace webAddressBookTests
             return this;
         }
 
-        public ContactHelper EnterAddress(string address)
+        public ContactHelper EnterAddress(ContactData add)
         {
-            Type(By.Name("address2"), address);
+            Type(By.Name("address2"), add.Address);
             return this;
         }
 
@@ -158,7 +200,7 @@ namespace webAddressBookTests
             EnterHomepage("1");
             EnterDates();
             SelectGroup();
-            EnterAddress("1/12");
+            EnterAddress(fullData);
             EnterHome("2");
             EnterNotes("3");
             SaveContact();
@@ -221,12 +263,22 @@ namespace webAddressBookTests
             EnterTelephoneNumbers(newData);
             EnterEmails(newData);
             EnterHomepage("3");
-            EnterAddress("11/12");
+            EnterAddress(newData);
             EnterHome("3");
             EnterNotes("3");
             SaveUpdate();
             manager.Navi.GoToHomePage();
             return this;
         }
+
+        public int GetNumberOfSearchResult()
+
+        {
+            manager.Navi.GoToHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+        }
+
     }
 }
