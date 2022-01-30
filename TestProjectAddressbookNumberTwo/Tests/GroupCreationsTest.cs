@@ -8,16 +8,25 @@ using System.Collections.Generic;
 namespace webAddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTest : AuthTestBase
+    public class GroupCreationsTest : AuthTestBase
     {
-
-        [Test]
-        public void GroupCreationTests()
+        public static IEnumerable<GroupData> RandomGroupProvider()
         {
-            GroupData group = new GroupData("test1");
-            group.Header = "test2";
-            group.Footer = "test3";
+            List<GroupData> groups = new List<GroupData>();
+            for (int i = 0; i < 5; i++)
+            {
+                groups.Add(new GroupData(GenerateRandomString(30))
+                {
+                    Header = GenerateRandomString(100),
+                    Footer = GenerateRandomString(100)
+                });
+            }
+            return groups;
+        }
 
+        [Test, TestCaseSource("RandomGroupProvider")]
+        public void GroupCreationTest(GroupData group)
+        { 
             List<GroupData> oldGroups = app.Group.GetGroupList();
 
             app.Group.CreateGroup(group);

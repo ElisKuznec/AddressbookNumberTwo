@@ -9,29 +9,36 @@ namespace webAddressBookTests
 {
     [TestFixture]
     public class ContactTests : AuthTestBase
-    { 
-
-        [Test]
-        public void ContactTest()
         {
+            public static IEnumerable<ContactData> RandomContactProvider()
+            
+            {
+                List<ContactData> contacts = new List<ContactData>();
+                for (int i = 0; i < 3; i++)
+                {
+                    contacts.Add(new ContactData(GenerateRandomString(10), GenerateRandomString(15))
+                    {
+                    });
+                }
+                return contacts;
+            }
 
-            ContactData newOne = new ContactData("Elis", "Nicññk");
-            newOne.Mobilenumb = "555-090";
-            newOne.Emailone = "example@int.com";
-            newOne.Address = "Sherwood 567/1";
+            [Test, TestCaseSource("RandomContactProvider")]
+            
+            public void ContactTest(ContactData newOne)
+            
+            {
+                List<ContactData> oldContacts = app.Contact.GetContactList();
 
-            List<ContactData> oldContacts = app.Contact.GetContactList();
+                app.Contact.FullContactCreation(newOne);
 
-            app.Contact.FullContactCreation(newOne);
+                List<ContactData> newContacts = app.Contact.GetContactList();
 
-            List<ContactData> newContacts = app.Contact.GetContactList();
+                oldContacts.Add(newOne);
+                oldContacts.Sort();
+                newContacts.Sort();
 
-            oldContacts.Add(newOne);
-            oldContacts.Sort();
-            newContacts.Sort();
-
-            Assert.AreEqual(oldContacts, newContacts);
-
-        }
-    }
+                Assert.AreEqual(oldContacts, newContacts);
+            }
+      }
 }
