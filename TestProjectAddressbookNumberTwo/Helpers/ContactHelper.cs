@@ -33,7 +33,38 @@ namespace webAddressBookTests
             };
         }
 
-        public ContactData GetContactInformationFromEditForm(int index)
+        public ContactData GetContactInformationFromIcon(int index)
+        {
+            manager.Navi.GoToHomePage();
+            SelectPersonalDetails(index);
+
+            string[] info = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
+            string[] allName = info[0].Split(' ');
+            string name = allName[0];
+            string lastname = allName[2];
+            string address = info[8];
+
+            string homenumb = Regex.Replace(info[12], @"[()H: -]", "");
+            string mobilenumb = Regex.Replace(info[14], @"[()M: -]", "");
+            string worknumb = Regex.Replace(info[16], @"[()W: -]", "");
+            string phone = Regex.Replace(info[40], @"[()P: -]", "");
+            string allPhone = $"{homenumb}\r\n{mobilenumb}\r\n{worknumb}\r\n{phone}";
+
+            string emailone = info[20];
+            string emailtwo = info[22];
+            string emailthree = info[24];
+            string allMails = $"{emailone}\r\n{emailtwo}\r\n{emailthree}";
+
+            return new ContactData(name, lastname)
+            {
+                Address = address,
+                AllPhones = allPhone,
+                AllMails = allMails
+            };
+        }
+
+
+            public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navi.GoToHomePage();
             UpdateContact(0);
@@ -66,6 +97,12 @@ namespace webAddressBookTests
             };
 
 
+        }
+
+        public ContactHelper SelectPersonalDetails(int index)
+        {
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[" + (index + 2) + "]/td[7]/a/img")).Click();
+            return this;
         }
 
         private List<ContactData> contactCache = null;
