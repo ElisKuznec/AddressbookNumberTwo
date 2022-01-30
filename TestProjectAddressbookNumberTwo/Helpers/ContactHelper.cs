@@ -23,25 +23,32 @@ namespace webAddressBookTests
             string lastname = cells[1].Text;
             string name = cells[2].Text;
             string address = cells[3].Text;
+            string allMails = cells[4].Text;
             string allPhones = cells[5].Text;
             return new ContactData(name, lastname)
             {
                 Address = address,
-                AllPhones = allPhones
-
+                AllPhones = allPhones,
+                AllMails = allMails
             };
         }
 
         public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navi.GoToHomePage();
-            UpdateContact();
+            UpdateContact(0);
             string name = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
             string homenumb = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilenumb = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string worknumb = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string phone = driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            string emailone = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string emailtwo = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string emailthree = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+
 
             return new ContactData(name, lastname)
             {
@@ -49,7 +56,12 @@ namespace webAddressBookTests
                 Homenumb = homenumb,
                 Mobilenumb = mobilenumb,
                 Worknumb = worknumb,
-                Address = address
+                Address = address,
+                Emailone = emailone,
+                Emailtwo = emailtwo,
+                Phone = phone,
+                Emailthree = emailthree,
+
 
             };
 
@@ -60,28 +72,21 @@ namespace webAddressBookTests
 
         public List<ContactData> GetContactList()
         {
+            manager.Navi.GoToHomePage();
             if (contactCache == null)
             {
-
-                List<ContactData> contactCache = new List<ContactData>();
+                contactCache = new List<ContactData>();
                 manager.Navi.GoToHomePage();
-
-                ICollection<IWebElement> webContactElements = driver.FindElements(By.CssSelector("tr[name='entry']"));
-
-                foreach (IWebElement element in webContactElements)
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[name='entry']"));
+                foreach (IWebElement element in elements)
                 {
-                    IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                    IWebElement name = cells[1];
-                    IWebElement lastname = cells[2];
-                    contactCache.Add(new ContactData(name.Text, lastname.Text)
-                    {
-                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
-                    });
+                    IList<IWebElement> row = element.FindElements(By.TagName("td"));
+                    contactCache.Add(new ContactData(row[2].Text, row[1].Text));
                 }
             }
-
             return new List<ContactData>(contactCache);
         }
+
 
         public ContactHelper SaveUpdate()
         {
@@ -90,9 +95,9 @@ namespace webAddressBookTests
             return this;
         }
 
-        public ContactHelper UpdateContact()
+        public ContactHelper UpdateContact(int row)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[" + (row + 2) + "]/td[8]/a/img")).Click();
             return this;
         }
 
@@ -110,9 +115,9 @@ namespace webAddressBookTests
             return this;
         }
 
-        public ContactHelper SelectContact(int index)
+        public ContactHelper SelectContact(int row)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[" + (row + 2) + "]/ td")).Click();
             return this;
         }
 
@@ -256,7 +261,7 @@ namespace webAddressBookTests
 
         public ContactHelper ModifyContact(ContactData newData)
         {
-            UpdateContact();
+            UpdateContact(1);
             EnterFullName(newData);
             EnterNickname("Lis");
             EnterCompanyInformation(newData);
@@ -280,5 +285,10 @@ namespace webAddressBookTests
             return Int32.Parse(m.Value);
         }
 
+        public int GetContactCount()
+        {
+            manager.Navi.GoToHomePage();
+            return driver.FindElements(By.CssSelector("[name='entry']")).Count;
+        }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace webAddressBookTests
 {
@@ -23,22 +22,19 @@ namespace webAddressBookTests
             List<ContactData> oldContact = app.Contact.GetContactList();
             
             app.Contact
-                .SelectContact(0)
+                .SelectContact(1)
                 .DeleteSelectedContact()
                 .AcceptDeletingContact();
             app.Navi.GoToGroupPage();
 
+            Assert.AreEqual(oldContact.Count - 1, app.Contact.GetContactCount());
+
             List<ContactData> newContact = app.Contact.GetContactList();
 
-            ContactData toBeRemoved = oldContact[0];
-            oldContact.RemoveAt(0);
+            oldContact.RemoveAt(indexToRemove);
+            oldContact.Sort();
+            newContact.Sort();
             Assert.AreEqual(oldContact, newContact);
-
-            foreach (ContactData group in newContact)
-            {
-                Assert.AreNotEqual(group.Id, toBeRemoved.Id);
-            }
-
 
         }
 
