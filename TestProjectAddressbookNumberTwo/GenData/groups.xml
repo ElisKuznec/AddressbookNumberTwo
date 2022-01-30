@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfGroupData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<GroupData>
+		<Name>H</Name>
+		<Header>A</Header>
+		<Footer>H</Footer>
+	</GroupData>
+	<GroupData>
+		<Name>1</Name>
+		<Header>1</Header>
+		<Footer>1</Footer>
+	</GroupData>
+	<GroupData>
+		<Name>|</Name>
+		<Header>+</Header>
+		<Footer>_</Footer>
+	</GroupData>
+	<GroupData>
+		<Name>Lua</Name>
+		<Header>Not</Header>
+		<Footer>Moon</Footer>
+	</GroupData>
+	<GroupData>
+		<Name>)</Name>
+		<Header>{</Header>
+		<Footer>]</Footer>
+	</GroupData>
+</ArrayOfGroupData>

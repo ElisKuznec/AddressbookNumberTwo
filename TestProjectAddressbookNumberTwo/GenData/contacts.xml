@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfContactData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<ContactData>
+		<Firstname>pp</Firstname>
+		<Lastname>KK</Lastname>
+		<AllPhones />
+		<AllEmails />
+	</ContactData>
+	<ContactData>
+		<Firstname>|</Firstname>
+		<Lastname>_</Lastname>
+		<AllPhones />
+		<AllEmails />
+	</ContactData>
+	<ContactData>
+		<Firstname>W</Firstname>
+		<Lastname>P</Lastname>
+		<AllPhones />
+		<AllEmails />
+	</ContactData>
+	<ContactData>
+		<Firstname>)</Firstname>
+		<Lastname>(</Lastname>
+		<AllPhones />
+		<AllEmails />
+	</ContactData>
+	<ContactData>
+		<Firstname>0</Firstname>
+		<Lastname>0</Lastname>
+		<AllPhones />
+		<AllEmails />
+	</ContactData>
+</ArrayOfContactData>

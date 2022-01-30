@@ -1,0 +1,72 @@
+﻿[
+  {
+    "Firstname": "Sol",
+    "Lastname": "Lua",
+    "Address": null,
+    "HomePhone": null,
+    "MobilePhone": null,
+    "WorkPhone": null,
+    "SecondaryPhone": null,
+    "FirstEmail": null,
+    "SecondEmail": null,
+    "ThirdEmail": null,
+    "AllPhones": "",
+    "AllEmails": ""
+  },
+  {
+    "Firstname": "+++",
+    "Lastname": "@@@",
+    "Address": null,
+    "HomePhone": null,
+    "MobilePhone": null,
+    "WorkPhone": null,
+    "SecondaryPhone": null,
+    "FirstEmail": null,
+    "SecondEmail": null,
+    "ThirdEmail": null,
+    "AllPhones": "",
+    "AllEmails": ""
+  },
+  {
+    "Firstname": " ",
+    "Lastname": " ",
+    "Address": null,
+    "HomePhone": null,
+    "MobilePhone": null,
+    "WorkPhone": null,
+    "SecondaryPhone": null,
+    "FirstEmail": null,
+    "SecondEmail": null,
+    "ThirdEmail": null,
+    "AllPhones": "",
+    "AllEmails": ""
+  },
+  {
+    "Firstname": "42",
+    "Lastname": "42",
+    "Address": null,
+    "HomePhone": null,
+    "MobilePhone": null,
+    "WorkPhone": null,
+    "SecondaryPhone": null,
+    "FirstEmail": null,
+    "SecondEmail": null,
+    "ThirdEmail": null,
+    "AllPhones": "",
+    "AllEmails": ""
+  },
+  {
+    "Firstname": "{",
+    "Lastname": "=",
+    "Address": null,
+    "HomePhone": null,
+    "MobilePhone": null,
+    "WorkPhone": null,
+    "SecondaryPhone": null,
+    "FirstEmail": null,
+    "SecondEmail": null,
+    "ThirdEmail": null,
+    "AllPhones": "",
+    "AllEmails": ""
+  }
+] 
