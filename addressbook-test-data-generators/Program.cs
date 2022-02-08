@@ -5,6 +5,7 @@ using System.Xml;
 using Newtonsoft.Json;
 using System.Xml.Serialization;
 using webAddressBookTests;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace addressbook_test_data_generators
 {

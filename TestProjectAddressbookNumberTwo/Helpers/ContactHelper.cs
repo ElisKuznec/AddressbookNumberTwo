@@ -70,20 +70,37 @@ namespace webAddressBookTests
             UpdateContact(0);
             string name = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string middlename = driver.FindElement(By.Name("middlename")).GetAttribute("value");
+            string nick = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string companytitle = driver.FindElement(By.Name("title")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
             string homenumb = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilenumb = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string worknumb = driver.FindElement(By.Name("work")).GetAttribute("value");
             string phone = driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
             string emailone = driver.FindElement(By.Name("email")).GetAttribute("value");
             string emailtwo = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string emailthree = driver.FindElement(By.Name("email3")).GetAttribute("value");
+            string homepage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            string birthday = driver.FindElement(By.Name("bday")).GetAttribute("value");
+            string birthmonth = driver.FindElement(By.XPath("//div[@id='content']/form/select[2]/option[1]")).Text;
+            string birthyear = driver.FindElement(By.Name("byear")).GetAttribute("value");
+            string annyversaryday = driver.FindElement(By.Name("aday")).GetAttribute("value");
+            string annyversarymounth = driver.FindElement(By.XPath("//div[@id='content']/form/select[4]/option[1]")).Text;
+            string annyversaryyear = driver.FindElement(By.Name("ayear")).GetAttribute("value");
+            string address2 = driver.FindElement(By.Name("address2")).Text;
+            string notes = driver.FindElement(By.Name("notes")).Text;
 
 
 
             return new ContactData(name, lastname)
             {
-                
+                Middlename = middlename,
+                Nickname = nick,
+                Companyname = company,
+                Companytitle = companytitle,
                 Homenumb = homenumb,
                 Mobilenumb = mobilenumb,
                 Worknumb = worknumb,
@@ -92,6 +109,17 @@ namespace webAddressBookTests
                 Emailtwo = emailtwo,
                 Phone = phone,
                 Emailthree = emailthree,
+                Faxnumb = fax,
+                Homepage = homepage,
+                Birthday = birthday,
+                Birthmonth = birthmonth,
+                Birthyear = birthyear,
+                Annyversaryday = annyversaryday,
+                Annyversarymounth = annyversarymounth,
+                Annyversaryyear = annyversaryyear,
+                Address2 = address2,
+                Notes = notes
+
 
 
             };
