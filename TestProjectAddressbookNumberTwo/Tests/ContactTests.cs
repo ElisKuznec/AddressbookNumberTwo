@@ -13,7 +13,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 namespace webAddressBookTests
 {
     [TestFixture]
-    public class ContactTests : AuthTestBase
+    public class ContactTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactProvider()
             
@@ -77,11 +77,11 @@ namespace webAddressBookTests
             public void ContactTest(ContactData newOne)
             
             {
-                List<ContactData> oldContacts = app.Contact.GetContactList();
+                List<ContactData> oldContacts = ContactData.GetAll();
 
                 app.Contact.FullContactCreation(newOne);
 
-                List<ContactData> newContacts = app.Contact.GetContactList();
+                List<ContactData> newContacts = ContactData.GetAll();
 
                 oldContacts.Add(newOne);
                 oldContacts.Sort();

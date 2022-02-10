@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace webAddressBookTests
 {
     [TestFixture]
-    public class ContactInformationTests : AuthTestBase
+    public class ContactInformationTests : ContactTestBase
     {
         [Test]
 
         public void TestContactInformation()
         {
             ContactData fromTable = app.Contact.GetContactInformationFromTable(0);
-            ContactData fromForm = app.Contact.GetContactInformationFromEditForm(0);
+            ContactData fromForm = app.Contact.GetContactInformationFromEditForm();
 
             Assert.AreEqual(fromTable, fromForm);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
@@ -25,15 +25,12 @@ namespace webAddressBookTests
         }
 
         [Test]
-        public void TestContactInformationIcon()
+        public void ContactDetailTest()
         {
-            ContactData fromIcon = app.Contact.GetContactInformationFromIcon(0);
-            ContactData fromForm = app.Contact.GetContactInformationFromEditForm(0);
+            string fromDetails = app.Contact.GetContactInformationFromDetailsForm();
+            ContactData fromForm = app.Contact.GetContactInformationFromEditForm();
 
-            Assert.AreEqual(fromIcon, fromForm);
-            Assert.AreEqual(fromIcon.Address, fromForm.Address);
-            Assert.AreEqual(fromIcon.AllPhones, fromForm.AllPhones);
-            Assert.AreEqual(fromIcon.AllMails, fromForm.AllMails);
+            Assert.AreEqual(fromDetails, fromForm.AllData);
         }
 
     }

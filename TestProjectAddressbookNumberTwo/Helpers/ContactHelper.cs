@@ -36,7 +36,7 @@ namespace webAddressBookTests
         public ContactData GetContactInformationFromIcon(int index)
         {
             manager.Navi.GoToHomePage();
-            SelectPersonalDetails(index);
+            SelectPersonalDetalis(index);
 
             string[] info = driver.FindElement(By.CssSelector("div#content")).Text.Split('\r', '\n');
             string[] allName = info[0].Split(' ');
@@ -64,7 +64,7 @@ namespace webAddressBookTests
         }
 
 
-            public ContactData GetContactInformationFromEditForm(int index)
+            public ContactData GetContactInformationFromEditForm()
         {
             manager.Navi.GoToHomePage();
             UpdateContact(0);
@@ -95,7 +95,7 @@ namespace webAddressBookTests
 
 
 
-            return new ContactData(name, lastname)
+            return new ContactData(name.Trim(), lastname.Trim())
             {
                 Middlename = middlename,
                 Nickname = nick,
@@ -119,18 +119,25 @@ namespace webAddressBookTests
                 Annyversaryyear = annyversaryyear,
                 Address2 = address2,
                 Notes = notes
-
-
-
             };
 
 
         }
 
-        public ContactHelper SelectPersonalDetails(int index)
+        public ContactHelper SelectPersonalDetalis(int index)
         {
-            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[" + (index + 2) + "]/td[7]/a/img")).Click();
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
             return this;
+        }
+
+        public string GetContactInformationFromDetailsForm()
+        {
+            manager.Navi.GoToHomePage();
+            SelectPersonalDetalis(0);
+            string AllDetails = driver.FindElement(By.XPath("//div[@id='content']")).Text;
+            return AllDetails;
         }
 
         private List<ContactData> contactCache = null;
@@ -177,12 +184,6 @@ namespace webAddressBookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             contactCache = null;
-            return this;
-        }
-
-        public ContactHelper SelectContact(int row)
-        {
-            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[" + (row + 2) + "]/ td")).Click();
             return this;
         }
 
@@ -326,7 +327,6 @@ namespace webAddressBookTests
 
         public ContactHelper ModifyContact(ContactData newData)
         {
-            UpdateContact(1);
             EnterFullName(newData);
             EnterNickname("Lis");
             EnterCompanyInformation(newData);
@@ -336,8 +336,6 @@ namespace webAddressBookTests
             EnterAddress(newData);
             EnterHome("3");
             EnterNotes("3");
-            SaveUpdate();
-            manager.Navi.GoToHomePage();
             return this;
         }
 
@@ -355,5 +353,136 @@ namespace webAddressBookTests
             manager.Navi.GoToHomePage();
             return driver.FindElements(By.CssSelector("[name='entry']")).Count;
         }
+
+        public void RemovingContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navi.GoToHomePage();
+            SelectGroupInFilter(group.Name);
+            SelectContactToAddToGroup(contact.Id);
+            CommitToRemovingContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void SelectGroupInFilter(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+
+        public void CommitToRemovingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        public void AddContactToGroup(ContactData contact, GroupData group, string filtername)
+        {
+            manager.Navi.GoToHomePage();
+            GroupFilter(filtername);
+            SelectContactToAddToGroup(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitToAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void CommitToAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void SelectContactToAddToGroup(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+        }
+
+        public void GroupFilter(string filterName)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(filterName);
+        }
+
+        private ContactHelper SelectContactToUpdate(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).FindElement(By.XPath("//img[@alt='Edit']")).Click();
+
+            return this;
+        }
+
+        private ContactHelper SelectContactToUpdate(int index)
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index + 1) + "]/td/input")).Click();
+            return this;
+        }
+
+        private ContactHelper SelectContactToDelete(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).Click();
+            return this;
+        }
+
+        private ContactHelper SelectContactToDelete(int index)
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index + 1) + "]/td/input")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index + 1) + "]/td/input")).Click();
+            return this;
+        }
+
+
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).Click();
+            return this;
+        }
+
+        public ContactHelper Modify(ContactData contact, ContactData name)
+        {
+            manager.Navi.GoToHomePage();
+            SelectContactToUpdate(contact.Id);
+            ModifyContact(name);
+            SaveUpdate();
+            manager.Navi.GoToHomePage();
+            return this;
+        }
+
+        public ContactHelper Modify(int row, ContactData newName)
+        {
+            manager.Navi.GoToHomePage();
+            SelectContactToUpdate(row);
+            ModifyContact(newName);
+            SaveUpdate();
+            manager.Navi.GoToHomePage();
+            return this;
+        }
+
+        public ContactHelper Remove(int row)
+        {
+            manager.Navi.GoToHomePage();
+            SelectContactToDelete(row);
+            DeleteSelectedContact();
+            AcceptDeletingContact();
+            manager.Navi.GoToHomePage();
+            return this;
+        }
+
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navi.GoToHomePage();
+            SelectContactToDelete(contact.Id);
+            DeleteSelectedContact();
+            AcceptDeletingContact();
+            manager.Navi.GoToHomePage();
+            return this;
+        }
+
+
     }
 }

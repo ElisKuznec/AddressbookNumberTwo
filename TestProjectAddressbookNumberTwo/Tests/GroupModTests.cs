@@ -8,17 +8,17 @@ using System.Collections.Generic;
 namespace webAddressBookTests
 {
     [TestFixture]
-    public class GroupModTests : AuthTestBase
+    public class GroupModTests : GroupTestBase
     {
         [Test]
         public void GroupModTest()
         { 
-            app.Navi.GoToGroupPage();
+
             int indexToMod = 1;
             app.Group.AddIfNoGroups(indexToMod);
 
-            List<GroupData> oldGroups = app.Group.GetGroupList();
-            GroupData oldData = oldGroups[0];
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData oldGroupData = oldGroups[indexToMod-1];
             
             GroupData group = new GroupData("test");
             group.Header = null;
@@ -28,9 +28,9 @@ namespace webAddressBookTests
 
             Assert.AreEqual(oldGroups.Count, app.Group.GetGroupCount());
 
-            List<GroupData> newGroups = app.Group.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
 
-            oldGroups[0].Name = group.Name;
+            oldGroups[indexToMod].Name = group.Name;
             oldGroups.Sort();
             newGroups.Sort();
 
@@ -38,7 +38,7 @@ namespace webAddressBookTests
 
             foreach (GroupData groupForMatching in newGroups)
             {
-                if(group.Id == oldData.Id)
+                if(group.Id == oldGroupData.Id)
                 {
                     Assert.AreEqual(group.Name, groupForMatching.Name);
                 }

@@ -133,5 +133,32 @@ namespace webAddressBookTests
             groupCache = null;
             return this;
         }
+
+        public GroupHelper Modify(GroupData group, GroupData newData)
+        {
+            manager.Navi.GoToGroupPage();
+            SelectGroup(group.Id);
+            ToEdithGroupForm();
+            NamingFields(newData);
+            UpdateGroup();
+            manager.Navi.GoToGroupPage();
+            return this;
+        }
+
+        public GroupHelper Remove(GroupData group)
+        {
+            manager.Navi.GoToGroupPage();
+            SelectGroup(group.Id);
+            DeleteGroup();
+            manager.Navi.GoToGroupPage();
+            return this;
+        }
+
+        public GroupHelper SelectGroup(string id)
+        {
+            driver.FindElement(By.XPath("//input[@name='selected[]']) and @value='" + id + "'")).Click();
+            return this;
+        }
+
     }
 }
