@@ -414,13 +414,13 @@ namespace webAddressBookTests
 
         private ContactHelper SelectContactToUpdate(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index + 1) + "]/td/input")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value= '" + index + "'])")).Click();
             return this;
         }
 
         private ContactHelper SelectContactToDelete(string id)
         {
-            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value= '" + id + "'])")).Click();
             return this;
         }
 
