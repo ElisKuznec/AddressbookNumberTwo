@@ -14,23 +14,25 @@ namespace webAddressBookTests
 
         public void ContactModTest()
         {
-            int indexToModify = 1;
             ContactData newData = new ContactData("Annie", "Spark");
             newData.Mobilenumb = "555-090-097";
             newData.Emailone = "NOTexample@int.com";
             newData.Address = "Nottingham 77/11";
-            app.Contact.AddIfNoContacts(indexToModify);
+            
+            app.Contact.AddIfNoContacts();
 
             List<ContactData> oldContact = ContactData.GetAll();
-            ContactData oldContactData = oldContact[indexToModify - 1];
+            ContactData toBeModified = oldContact[0];
 
-            app.Contact.Modify(1, newData);
+            ContactData oldData = oldContact[0];
+
+            app.Contact.Modify(oldData, newData);
             Assert.AreEqual(oldContact.Count, app.Contact.GetContactCount());
 
             List<ContactData> newContact = ContactData.GetAll();
 
-            oldContact[indexToModify-1].Name = newData.Name;
-            oldContact[indexToModify-1].Lastname = newData.Lastname;
+            oldContact[0].Name = newData.Name;
+            oldContact[0].Lastname = newData.Lastname;
 
             oldContact.Sort();
             newContact.Sort();
@@ -39,9 +41,9 @@ namespace webAddressBookTests
 
             foreach (var contact in newContact)
             {
-                if (contact.Id == oldContactData.Id)
+                if (contact.Id == oldData.Id)
                 {
-                    Assert.AreEqual($"{newData.Lastname} {newData.Name}", $"{contact.Lastname} {contact.Name}");
+                    Assert.AreEqual($"{newData.Lastname} {newData.Name}", $"{toBeModified.Lastname} {toBeModified.Name}");
                 }
             }
         }

@@ -316,13 +316,14 @@ namespace webAddressBookTests
             return this;
         }
 
-        public void AddIfNoContacts(int index)
+        public ContactHelper AddIfNoContacts()
         {
-            while (!IsElementPresent(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td")))
+            if (!IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img")))
             {
                 CreateSimpleContact(new ContactData("Simple", "One"));
                 manager.Navi.GoToHomePage();
             }
+            return this;
         }
 
         public ContactHelper ModifyContact(ContactData newData)
