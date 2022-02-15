@@ -23,6 +23,7 @@ namespace mantis_tests
 
             GoToHomePage();
             EnterUsername(account.Name);
+            ClickLogin();
             EnterPassword(account.Password);
             ClickLogin();
         }
