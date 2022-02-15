@@ -408,14 +408,13 @@ namespace webAddressBookTests
 
         private ContactHelper SelectContactToUpdate(string id)
         {
-            driver.FindElement(By.XPath("//input[@name='selected[]' and @value='" + id + "']")).FindElement(By.XPath("//img[@alt='Edit']")).Click();
-
-            return this;
+           driver.FindElement(By.XPath("//tr[./td[./input[@name='selected[]' and @value='" + id + "']]]")).FindElement(By.XPath(".//img[@alt='Edit']")).Click();
+           return this;
         }
 
         private ContactHelper SelectContactToUpdate(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value= '" + index + "'])")).Click();
+            driver.FindElement(By.XPath($"//table[@id='maintable']/tbody/tr[{index + 1}]/td[8]")).Click();
             return this;
         }
 
