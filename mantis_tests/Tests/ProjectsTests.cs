@@ -7,66 +7,80 @@ using System.IO;
 namespace mantis_tests
 {
     [TestFixture]
+
     public class ProjectTests : TestBase
     {
-        AccountData account = new AccountData()
-        {
-            Username = "administrator",
-            Password = "root",
-
-        };
-
-        ProjectData project = new ProjectData
-        {
-            ProjectName = "project_" + DateTime.Now.ToString(),
-            ProjectDescription = "Description"
-        };
-
-
-
         [Test]
-        public void TestProjectCreation()
+        public void ProjectCreationTest()
         {
-            app.Auth.Login(account);
-            app.Navi.GoToProjectsPage();
+            AccountData account = new AccountData
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+            ProjectData project = new ProjectData
+            {
+                ProjectName = "pr0" + DateTime.Now.ToString(),
+                ProjectDescription = "Description"
+            };
 
-            List<ProjectData> oldProjects = app.Project.GetProjectList();
-            app.Project.Create(project);
+            List<ProjectData> oldProjects = app.API.GetAPIProjectsList(account);
 
-            Assert.AreEqual(oldProjects.Count + 1, app.Project.GetProjectList().Count);
 
-            List<ProjectData> newProjects = app.Project.GetProjectList();
+            app.Auth.Login();
+            app.Project.CreateProject(project);
+
+            List<ProjectData> newProjects = app.API.GetAPIProjectsList(account);
+
             oldProjects.Add(project);
+
             oldProjects.Sort();
             newProjects.Sort();
+
             Assert.AreEqual(oldProjects, newProjects);
 
+            app.Auth.Logout();
         }
-
         [Test]
-        public void TestProjectRemoval()
+        public void ProjectDeletionTest()
         {
-
-            app.Auth.Login(account);
-            app.Navi.GoToProjectsPage();
-
-            List<ProjectData> projectsList = app.Project.GetProjectList();
-            if (projectsList.Count == 0)
+            AccountData account = new AccountData
             {
-                app.Project.Create(project);
+                Name = "administrator",
+                Password = "root"
+            };
+            ProjectData newproject = new ProjectData
+            {
+                ProjectName = "pr0" + DateTime.Now.ToString(),
+                ProjectDescription = "Description"
+            };
+            if (app.API.GetAPIProjectsList(account).Count == 0)
+            {
+                app.Project.CreateProject(newproject);
             }
 
-            List<ProjectData> oldProjects = app.Project.GetProjectList();
 
-            app.Project.Remove(1);
+            List<ProjectData> oldProjects = app.API.GetAPIProjectsList(account);
+            ProjectData delproject = new ProjectData
+            {
+                ProjectName = oldProjects[0].ProjectName,
+                ProjectDescription = oldProjects[0].ProjectDescription
+            };
 
-            Assert.AreEqual(oldProjects.Count - 1, app.Project.GetProjectList().Count);
+            app.Auth.Login();
+            app.Project.RemoveProject();
 
-            List<ProjectData> newProjects = app.Project.GetProjectList();
-            oldProjects.Remove(project);
+
+            List<ProjectData> newProjects = app.API.GetAPIProjectsList(account);
+
+            oldProjects.Remove(delproject);
+
             oldProjects.Sort();
             newProjects.Sort();
+
             Assert.AreEqual(oldProjects, newProjects);
+
+            app.Auth.Logout();
         }
     }
 }

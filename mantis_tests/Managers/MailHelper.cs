@@ -23,7 +23,10 @@ namespace mantis_tests
                 if (pop3.GetMessageCount() > 0)
                 {
                     MailMessage message = pop3.GetMessage(1);
-                    return message.Body;
+                    string body = message.Body;
+                    pop3.DeleteMessage(1);
+                    pop3.LogOut();
+                    return body;
                 }
                 else
                 {

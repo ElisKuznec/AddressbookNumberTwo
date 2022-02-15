@@ -11,50 +11,41 @@ namespace mantis_tests
 {
     public class LoginHelper : HelperBase
     {
-        public LoginHelper(ApplicationManager manager) : base(manager)
+        public LoginHelper(ApplicationManager manager) : base(manager) { }
+
+        public void Login()
         {
-        }
-        public void Login(AccountData account)
-        {
-            if (IsLoggedIn())
+            AccountData account = new AccountData
             {
-                if (IsLoggedIn(account))
-                {
-                    return;
-                }
+                Name = "administrator",
+                Password = "root"
+            };
 
-                Logout();
-            }
-            Type(By.Name("username"), account.Username);
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
-
-            Type(By.Name("password"), account.Password);
-            driver.FindElement(By.XPath("//input[@type='submit']")).Click();
+            GoToHomePage();
+            EnterUsername(account.Name);
+            EnterPassword(account.Password);
+            ClickLogin();
         }
-
+        private void ClickLogin()
+        {
+            driver.FindElement(By.XPath("//input[@type= 'submit']")).Click();
+        }
+        private void EnterUsername(string username)
+        {
+            driver.FindElement(By.Name("username")).SendKeys(username);
+        }
+        private void EnterPassword(string password)
+        {
+            driver.FindElement(By.Name("password")).SendKeys(password);
+        }
+        private void GoToHomePage()
+        {
+            manager.Driver.Url = "http://localhost/mantisbt-2.25.2/login_page.php";
+        }
         public void Logout()
         {
-            if (IsLoggedIn())
-            {
-                driver.FindElement(By.ClassName("user-info")).Click();
-                driver.FindElement(By.CssSelector("#navbar-container > div.navbar-buttons.navbar-header.navbar-collapse.collapse > ul > li.grey.open > ul > li:nth-child(4) > a")).Click();
-            }
-        }
-        public bool IsLoggedIn()
-        {
-            return IsElementPresent(By.XPath("//span[@class = 'user-info']"));
-            throw new NotImplementedException();
-        }
-
-        public bool IsLoggedIn(AccountData account)
-        {
-            return IsLoggedIn()
-                && GetLoggedUserName() == account.Username;
-        }
-
-        private string GetLoggedUserName()
-        {
-            return driver.FindElement(By.XPath("//span[@class = 'user-info']")).Text;
+            driver.FindElement(By.ClassName("user-info")).Click();
+            driver.FindElement(By.CssSelector("#navbar-container > div.navbar-buttons.navbar-header.navbar-collapse.collapse > ul > li.grey.open > ul > li:nth-child(4) > a")).Click();
         }
     }
 }

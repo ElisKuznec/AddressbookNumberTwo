@@ -17,9 +17,10 @@ namespace mantis_tests
         {
         }
 
-        public ProjectHelper Create(ProjectData project)
+        public ProjectHelper CreateProject(ProjectData project)
         {
-            manager.Navi.GoToProjectsPage();
+            OpenExplorer();
+            OpenProjectsList();
             InitNewProjectCreation();
             FillProjectForm(project);
             SubmitProjectCreation();
@@ -44,14 +45,24 @@ namespace mantis_tests
 
         }
 
-
-        public ProjectHelper Remove(int p)
+        private void ClickOnProjectLink()
         {
-            manager.Navi.GoToProjectsPage();
-            SelectProject();
-            RemoveProject();
-            manager.Navi.GoToProjectsPage();
+            driver.FindElement(By.XPath("//table[@class='table table-striped table-bordered table-condensed table-hover']/tbody/tr/td/a")).Click();
+        }
 
+        private void SubmitRemoval()
+        {
+            driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div[2]/div/div[2]/div/form/fieldset/input[3]")).Click();
+            driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div[2]/div/div/div[2]/form/input[4]")).Click();
+        }
+
+
+        public ProjectHelper RemoveProject()
+        {
+            OpenExplorer();
+            OpenProjectsList();
+            ClickOnProjectLink();
+            SubmitRemoval();
             return this;
         }
 
@@ -92,7 +103,7 @@ namespace mantis_tests
             return this;
         }
 
-        public ProjectHelper RemoveProject()
+        public ProjectHelper Remove()
         {
             driver.FindElement(By.XPath("//fieldset/input[@type='submit']")).Click();
             driver.FindElement(By.XPath("//input[@type='submit']")).Click();
@@ -100,5 +111,33 @@ namespace mantis_tests
             return this;
         }
 
+        public List<ProjectData> GetProjectListByWeb()
+        {
+            mantis_tests.Mantis.MantisConnectPortTypeClient client = new mantis_tests.Mantis.MantisConnectPortTypeClient();
+            mantis_tests.Mantis.IssueData issue = new mantis_tests.Mantis.IssueData();
+            OpenExplorer();
+            OpenProjectsList();
+            projectList.Clear();
+
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//table[@class='table table-striped table-bordered table-condensed table-hover']/tbody/tr/td/a"));
+            foreach (IWebElement element in elements)
+            {
+                projectList.Add(new ProjectData()
+                {
+                    ProjectName = element.Text
+                });
+            }
+            return projectList;
+        }
+
+        private void OpenExplorer()
+        {
+            driver.FindElement(By.CssSelector(".nav-list > li:nth-child(7) > a:nth-child(1) > span:nth-child(2)")).Click();
+        }
+
+        private void OpenProjectsList()
+        {
+            driver.FindElement(By.CssSelector(".nav-tabs > li:nth-child(3) > a:nth-child(1)")).Click();
+        }
     }
 }

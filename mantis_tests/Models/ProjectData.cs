@@ -23,7 +23,7 @@ namespace mantis_tests
 
         public override string ToString()
         {
-            return "projectname=" + ProjectName + "\ndescription= " + ProjectDescription;
+            return ProjectName;
         }
 
         public int CompareTo(ProjectData other)
@@ -38,5 +38,7 @@ namespace mantis_tests
         public string ProjectName { get; set; }
 
         public string ProjectDescription { get; set; }
+
+        public string Id { get; set; }
     }
 }
